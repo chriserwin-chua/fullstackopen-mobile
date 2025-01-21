@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.backgroundGray,
     color: theme.colors.textSecondary,
     flexDirection: 'row',
+    height: 50,
   },
 });
 
