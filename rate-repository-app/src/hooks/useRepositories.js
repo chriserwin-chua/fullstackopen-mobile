@@ -4,11 +4,7 @@ import { GET_REPOSITORIES } from '../graphql/queries';
 const useRepositories = () => {
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
-  const {
-    data,
-    error,
-    loading: isLoading,
-  } = useQuery(GET_REPOSITORIES, {
+  const { data, loading: isLoading } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
     // Other options
   });
@@ -18,7 +14,6 @@ const useRepositories = () => {
     // Replace the IP address part with your own IP address!
     //const response = await fetch('http://192.168.1.145:5000/api/repositories');
     //const json = await response.json();
-
     setLoading(isLoading);
     setRepositories(data.repositories);
   };

@@ -2,6 +2,9 @@ import { Text, TextInput, Pressable, View, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
 import theme from '../theme';
 import * as yup from 'yup';
+import useSignin from '../hooks/useSignin';
+import { useEffect } from 'react';
+import AuthStorage from '../utils/authStorage';
 const initialValues = {
   username: '',
   password: '',
@@ -74,7 +77,7 @@ const SignInForm = ({ onSubmit }) => {
         secureTextEntry
         style={[
           styles.inputContainer,
-          !!formik.errors.password
+          !!formik.touched.password && !!formik.errors.password
             ? styles.errorInputContainer
             : styles.normalInputContainer,
         ]}
@@ -90,9 +93,24 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
-  const onSubmit = (values) => {
-    console.log(values);
+  const { signIn } = useSignin();
+  const authStorage = new AuthStorage();
+  const onSubmit = async (values) => {
+    try {
+      await signIn(values);
+      // const { data } = await signIn(values);
+      // const accessToken = data?.authenticate.accessToken;
+      // authStorage.setAccessToken(accessToken);
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  // useEffect(() => {
+  //   if (result.data) {
+  //     const tokenResult = result.data?.authenticate?.accessToken;
+  //   }
+  // }, [result]);
 
   return <SignInForm onSubmit={onSubmit} />;
 };

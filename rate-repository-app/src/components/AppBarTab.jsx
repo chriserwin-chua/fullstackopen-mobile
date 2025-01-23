@@ -12,14 +12,22 @@ const styles = StyleSheet.create({
   // ...
 });
 
-const AppBarTab = ({ text, path }) => {
-  return (
-    <Pressable>
-      <Link to={path}>
+const AppBarTab = ({ text, path, isLink, onPress }) => {
+  if (isLink) {
+    return (
+      <Pressable>
+        <Link to={path}>
+          <Text style={styles.text}>{text}</Text>
+        </Link>
+      </Pressable>
+    );
+  } else {
+    return (
+      <Pressable onPress={onPress}>
         <Text style={styles.text}>{text}</Text>
-      </Link>
-    </Pressable>
-  );
+      </Pressable>
+    );
+  }
 };
 
 export default AppBarTab;
