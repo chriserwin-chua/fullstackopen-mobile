@@ -3,8 +3,6 @@ import { useFormik } from 'formik';
 import theme from '../theme';
 import * as yup from 'yup';
 import useSignin from '../hooks/useSignin';
-import { useEffect } from 'react';
-import AuthStorage from '../utils/authStorage';
 const initialValues = {
   username: '',
   password: '',
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
   // ...
 });
 
-const SignInForm = ({ onSubmit }) => {
+export const SignInForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -94,7 +92,6 @@ const SignInForm = ({ onSubmit }) => {
 
 const SignIn = () => {
   const { signIn } = useSignin();
-  const authStorage = new AuthStorage();
   const onSubmit = async (values) => {
     try {
       await signIn(values);
