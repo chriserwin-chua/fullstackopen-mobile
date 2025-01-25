@@ -2,6 +2,7 @@ import { FlatList, View, StyleSheet } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import { useEffect, useState } from 'react';
 import useRepositories from '../hooks/useRepositories';
+import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
   separator: {
@@ -15,7 +16,7 @@ export const RepositoryListContainer = ({ repositories }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
-
+  const navigate = useNavigate();
   return (
     <FlatList
       style={styles.list}
@@ -33,6 +34,7 @@ export const RepositoryListContainer = ({ repositories }) => {
             reviews={item.reviewCount}
             rating={item.ratingAverage}
             avatarUrl={item.ownerAvatarUrl}
+            onPress={() => navigate(`/${item.id}`)}
           />
         );
       }}

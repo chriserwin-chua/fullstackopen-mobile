@@ -44,7 +44,7 @@ const AppBar = () => {
     <View style={styles.container}>
       <ScrollView horizontal>
         <AppBarTab text="Repositories" path="/" isLink />
-        {data.me ? (
+        {!!data?.me ? (
           <AppBarTab
             text="Sign out"
             path="/"
