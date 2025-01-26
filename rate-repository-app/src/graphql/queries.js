@@ -1,8 +1,16 @@
 import { gql } from '@apollo/client';
 
 export const GET_REPOSITORIES = gql`
-  query Repositories {
-    repositories {
+  query Repositories(
+    $orderBy: AllRepositoriesOrderBy
+    $orderDirection: OrderDirection
+    $searchKeyword: String
+  ) {
+    repositories(
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      searchKeyword: $searchKeyword
+    ) {
       totalCount
       pageInfo {
         hasPreviousPage
@@ -36,10 +44,32 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_ME = gql`
-  query Me {
+  query Me($includeReviews: Boolean = false) {
     me {
       id
       username
+      createdAt
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+            repository {
+              id
+              name
+              fullName
+              url
+            }
+          }
+        }
+      }
+      reviewCount
     }
   }
 `;

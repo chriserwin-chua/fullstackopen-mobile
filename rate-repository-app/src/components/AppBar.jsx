@@ -32,9 +32,7 @@ const AppBar = () => {
 
   const { data } = useQuery(GET_ME, {
     fetchPolicy: 'cache-and-network',
-    // Other options
   });
-
   const handleLogout = async () => {
     await authStorage.removeAccessToken();
     apolloClient.resetStore();
@@ -45,6 +43,9 @@ const AppBar = () => {
       <ScrollView horizontal>
         <AppBarTab text="Repositories" path="/" isLink />
         {data?.me && <AppBarTab text="Create a review" path="/review" isLink />}
+        {data?.me && (
+          <AppBarTab text="My reviews" path="/reviewedlist" isLink />
+        )}
         {!!data?.me ? (
           <AppBarTab
             text="Sign out"
